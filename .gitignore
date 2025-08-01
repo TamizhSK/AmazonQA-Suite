@@ -1,0 +1,7 @@
+.claude
+.pytest_cache
+.vscode
+test_env
+utils/__pycache__
+tests/__pycache__
+__pycache__

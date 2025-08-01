@@ -1,7 +1,4 @@
-"""
-Amazon India Automation Test Suite
-Clean, working implementation for testing Amazon India functionality
-"""
+
 
 import pytest
 import time

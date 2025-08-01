@@ -1,9 +1,4 @@
-"""
-Amazon India Comprehensive Test Suite
-Enhanced with deep functional testing, authentication flows, 
-price validation, filters testing, localization and modern Python 3.8+ compatibility
-Single window execution with comprehensive reporting
-"""
+
 
 import pytest
 import time
@@ -28,9 +23,6 @@ from selenium.webdriver.support.ui import Select
 # Initialize faker for test data generation
 fake = Faker('en_IN')  # Indian locale for relevant test data
 
-# =============================================================================
-# ENHANCED TEST DATA AND CONFIGURATIONS
-# =============================================================================
 
 class TestConfig:
     """Enhanced test configuration with comprehensive data"""
@@ -87,9 +79,7 @@ class TestConfig:
         "max_search_time": 8
     }
 
-# =============================================================================
-# BASIC TEST SUITE - Essential functionality testing
-# =============================================================================
+
 
 @pytest.mark.basic
 class TestAmazonBasic:
@@ -171,7 +161,7 @@ class TestAmazonBasic:
         ]
         
         first_product_link = None
-        for product in products[:3]:  # Try first 3 products
+        for product in products[:3]: 
             for selector in product_link_selectors:
                 try:
                     link = product.find_element(By.CSS_SELECTOR, selector)
@@ -544,9 +534,7 @@ class TestAmazonBasic:
         print(" Basic filters test completed")
 
 
-# =============================================================================
-# ADVANCED TEST SUITE - Comprehensive testing with deep validation
-# =============================================================================
+
 
 @pytest.mark.advanced
 class TestAmazonAdvanced:
@@ -897,15 +885,15 @@ class TestAmazonAdvanced:
             "invalid_count": len(invalid_prices),
             "total_products": len(products_data),
             "products_with_prices": total_with_prices,
-            "invalid_products": invalid_prices[:3],  # Show first 3 invalid products
-            "passed": accuracy >= 70  # 70% accuracy threshold
+            "invalid_products": invalid_prices[:3], 
+            "passed": accuracy >= 70  
         }
     
     def advanced_mouse_interactions(self, driver, product_elements):
         """Perform advanced mouse interactions with products"""
         interactions_successful = 0
         
-        for i, product in enumerate(product_elements[:3]):  # Test first 3 products
+        for i, product in enumerate(product_elements[:3]): 
             try:
                 # Scroll to product
                 driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", product)
@@ -974,9 +962,7 @@ class TestAmazonAdvanced:
         
         return (relevant_count / len(products_data)) * 100 if products_data else 0
     
-    # =========================================================================
-    # ADVANCED TEST METHODS
-    # =========================================================================
+
     
     def test_comprehensive_search_with_categories(self, browser_setup):
         """Test comprehensive search across multiple categories with validation"""
@@ -1107,7 +1093,7 @@ class TestAmazonAdvanced:
         passed_tests = sum(1 for r in price_validation_results if r["passed"])
         
         # More lenient threshold for real-world testing
-        min_accuracy = 50  # Reduced from 70
+        min_accuracy = 50 
         assert overall_accuracy >= min_accuracy, f"Overall price accuracy too low: {overall_accuracy:.1f}% (minimum: {min_accuracy}%)"
         
         print(f" Advanced price validation passed")
@@ -1139,7 +1125,7 @@ class TestAmazonAdvanced:
         accuracy = (len(valid_prices) / total_with_prices * 100) if total_with_prices > 0 else 0
         
         # More lenient passing criteria
-        passed = accuracy >= 40 or len(valid_prices) >= 2  # Pass if 40%+ accuracy OR at least 2 valid prices
+        passed = accuracy >= 40 or len(valid_prices) >= 2  
         
         return {
             "accuracy": accuracy,
@@ -1242,13 +1228,13 @@ class TestAmazonAdvanced:
         navigation_success_rate = navigation_successful / products_to_test if products_to_test > 0 else 0
         
         # More lenient assertions
-        min_interaction_rate = 0.3  # Reduced from 0.6
-        min_navigation_rate = 0.3   # Reduced from 0.5
+        min_interaction_rate = 0.3
+        min_navigation_rate = 0.3 
         
         assert interaction_success_rate >= min_interaction_rate, \
             f"Mouse interaction success rate too low: {interaction_success_rate:.2f} (minimum: {min_interaction_rate})"
         
-        # Allow passing if either navigation works OR we have good interactions
+        
         navigation_or_interaction_ok = navigation_success_rate >= min_navigation_rate or interaction_success_rate >= 0.5
         assert navigation_or_interaction_ok, \
             f"Both navigation ({navigation_success_rate:.2f}) and interaction ({interaction_success_rate:.2f}) rates too low"
@@ -2096,10 +2082,10 @@ class TestAmazonAdvanced:
                 try:
                     from bs4 import BeautifulSoup
                     soup = BeautifulSoup(page_source, 'html.parser')
-                    print("    ✅ BeautifulSoup HTML parsing enabled")
+                    print("     BeautifulSoup HTML parsing enabled")
                 except ImportError:
                     soup = None
-                    print("    ⚠️ BeautifulSoup not available, using selenium only")
+                    print("     BeautifulSoup not available, using selenium only")
                 
                 available_language_elements = {}
                 
@@ -2181,7 +2167,7 @@ class TestAmazonAdvanced:
                                     "match_type": match_type,
                                     "context": surrounding_text[:200]
                                 }
-                                print(f"        ✅ {config['display_name']} FOUND - {match_type}")
+                                print(f"         {config['display_name']} FOUND - {match_type}")
                                 print(f"           ID: '{radio_id}', Value: '{radio_value}', Selected: {radio.is_selected()}")
                                 break
                     
@@ -2257,7 +2243,7 @@ class TestAmazonAdvanced:
                                                 "match_pattern": pattern,
                                                 "context": parent_text[:150]
                                             }
-                                            print(f"        ✅ {config['display_name']} found via BeautifulSoup - pattern '{pattern}'")
+                                            print(f"         {config['display_name']} found via BeautifulSoup - pattern '{pattern}'")
                                             break
                                     except Exception as e:
                                         continue
@@ -2292,13 +2278,13 @@ class TestAmazonAdvanced:
                 
                 # Final summary
                 if available_language_elements:
-                    print(f"    ✅ Successfully discovered {len(available_language_elements)} language options:")
+                    print(f"     Successfully discovered {len(available_language_elements)} language options:")
                     for lang_name, lang_info in available_language_elements.items():
                         config = lang_info["config"]
                         print(f"      - {config['display_name']}: Strategy={lang_info['strategy']}, Selected={lang_info['is_selected']}")
                 else:
-                    print("    ❌ No language radio buttons found with any strategy")
-                    print("    🔍 Debugging: Checking for alternative language selection methods...")
+                    print("   X - No language radio buttons found with any strategy")
+                    print("     Debugging: Checking for alternative language selection methods...")
                     
                     # Debug: Look for dropdown or other selection methods
                     dropdowns = driver.find_elements(By.TAG_NAME, "select")
@@ -2373,9 +2359,9 @@ class TestAmazonAdvanced:
                                     # Verify selection
                                     if radio_element.is_selected():
                                         radio_click_success = True
-                                        print(f"        ✅ {config['display_name']} radio button selected successfully")
+                                        print(f"         {config['display_name']} radio button selected successfully")
                                     else:
-                                        print(f"        ⚠️ Radio button clicked but not selected, trying alternative methods...")
+                                        print(f"         Radio button clicked but not selected, trying alternative methods...")
                             except Exception as e:
                                 print(f"        Direct radio click failed: {e}")
                             
@@ -2402,7 +2388,7 @@ class TestAmazonAdvanced:
                                                     
                                                     if radio_element.is_selected():
                                                         radio_click_success = True
-                                                        print(f"        ✅ {config['display_name']} selected via label click")
+                                                        print(f"         {config['display_name']} selected via label click")
                                                         break
                                             
                                             if radio_click_success:
@@ -2420,7 +2406,7 @@ class TestAmazonAdvanced:
                                     
                                     if radio_element.is_selected():
                                         radio_click_success = True
-                                        print(f"        ✅ {config['display_name']} selected via JavaScript click")
+                                        print(f"         {config['display_name']} selected via JavaScript click")
                                 except Exception as e:
                                     print(f"        JavaScript click failed: {e}")
                             
@@ -2499,7 +2485,7 @@ class TestAmazonAdvanced:
                                         # Try direct click first
                                         save_button.click()
                                         save_click_success = True
-                                        print(f"        ✅ Save Changes button clicked successfully")
+                                        print(f"         Save Changes button clicked successfully")
                                         
                                     except Exception as e:
                                         print(f"        Direct save click failed: {e}")
@@ -2508,7 +2494,7 @@ class TestAmazonAdvanced:
                                         try:
                                             driver.execute_script("arguments[0].click();", save_button)
                                             save_click_success = True
-                                            print(f"        ✅ Save Changes clicked via JavaScript")
+                                            print(f"         Save Changes clicked via JavaScript")
                                         except Exception as e2:
                                             print(f"        JavaScript save click failed: {e2}")
                                     
@@ -2554,7 +2540,7 @@ class TestAmazonAdvanced:
                                             
                                             if conversion_success:
                                                 successful_conversions += 1
-                                                print(f"        ✅ {config['display_name']} language conversion VERIFIED!")
+                                                print(f"         {config['display_name']} language conversion VERIFIED!")
                                                 print(f"           Found {len(detected_indicators)} indicators: {detected_indicators[:5]}")
                                                 
                                                 # STEP 5: Verify navigation and UI elements changed
@@ -2566,28 +2552,28 @@ class TestAmazonAdvanced:
                                                         "nav_elements_changed": True,
                                                         "success": True
                                                     })
-                                                    print(f"        ✅ Navigation elements converted to {config['display_name']}")
+                                                    print(f"         Navigation elements converted to {config['display_name']}")
                                                 
                                                 # Stop after first successful conversion to avoid confusion
-                                                print(f"        🎉 {config['display_name']} language conversion completed successfully!")
+                                                print(f"         {config['display_name']} language conversion completed successfully!")
                                                 break
                                             else:
-                                                print(f"        ⚠️ {config['display_name']} conversion partial (only {len(detected_indicators)} indicators)")
+                                                print(f"         {config['display_name']} conversion partial (only {len(detected_indicators)} indicators)")
                                         else:
-                                            print(f"        ❌ No {config['display_name']} language indicators found after conversion")
+                                            print(f"       'X'No {config['display_name']} language indicators found after conversion")
                                     else:
-                                        print(f"        ❌ Could not click Save Changes button")
+                                        print(f"       'X'Could not click Save Changes button")
                                 else:
-                                    print(f"        ❌ Save Changes button not found")
+                                    print(f"       'X'Save Changes button not found")
                             else:
-                                print(f"        ❌ Could not select {config['display_name']} radio button")
+                                print(f"       'X'Could not select {config['display_name']} radio button")
                                 
                         except Exception as e:
                             print(f"        {config['display_name']} radio button test failed: {e}")
                             continue
                     
                     if successful_conversions == 0:
-                        print("    ⚠️ No successful language conversions, but radio button detection was successful")
+                        print("     No successful language conversions, but radio button detection was successful")
                 
                 else:
                     print("    No language options found in preferences page")
@@ -2633,7 +2619,7 @@ class TestAmazonAdvanced:
         language_conversions = sum(1 for test in language_tests if "conversion_verified" in test.get("step", "") and test.get("conversion_successful", False))
         language_applications = sum(1 for test in language_tests if "language_applied" in test.get("step", "") and test.get("auto_applied", False))
         
-        print(f" ✅ Enhanced language conversion testing completed!")
+        print(f"  Enhanced language conversion testing completed!")
         print(f"    - Total successful steps: {successful_steps}/{len(language_tests)}")
         print(f"    - Language applications: {language_applications}")
         print(f"    - Verified conversions: {language_conversions}")
@@ -2647,7 +2633,7 @@ class TestAmazonAdvanced:
             if "indicator_count" in test:
                 extra_info += f" - {test['indicator_count']} indicators"
             
-            print(f"      - {step_name}{extra_info}: {'✅' if test.get('success') else '❌'}")
+            print(f"      - {step_name}{extra_info}: {'' if test.get('success') else 'X'}")
     
     def verify_navigation_language_change(self, driver, lang_name, config):
         """Verify that navigation elements have changed to the selected language"""
@@ -2876,7 +2862,7 @@ class TestAmazonAdvanced:
                                         # AUTO-CLICK the apply button
                                         try:
                                             if robust_element_click(driver, apply_button):
-                                                print(f"      ✅ SUCCESSFULLY CLICKED Apply button for {postal_code}")
+                                                print(f"       SUCCESSFULLY CLICKED Apply button for {postal_code}")
                                                 time.sleep(3)  # Wait for location change to process
                                                 
                                                 location_tests.append({
@@ -2894,7 +2880,7 @@ class TestAmazonAdvanced:
                                                     if updated_location_element:
                                                         new_location_text = updated_location_element.text.strip()
                                                         if new_location_text != current_location:
-                                                            print(f"      ✅ Location successfully changed to: {new_location_text}")
+                                                            print(f"       Location successfully changed to: {new_location_text}")
                                                             location_tests.append({
                                                                 "step": f"{country_name.lower()}_location_updated_{i+1}",
                                                                 "country": country_name,
@@ -3026,7 +3012,7 @@ class TestAmazonAdvanced:
                 if "location_updated" in test.get("step", ""):
                     location_updates += 1
         
-        print(f" ✅ Enhanced multi-country location testing completed!")
+        print(f"OK - Enhanced multi-country location testing completed!")
         print(f"    - Total successful steps: {successful_steps}/{len(location_tests)}")
         print(f"    - Countries tested: {list(country_successes.keys())}")
         print(f"    - Auto-apply button clicks: {apply_button_clicks}")
@@ -3045,12 +3031,10 @@ class TestAmazonAdvanced:
             elif "indicators" in test:
                 extra_info = f" ({len(test['indicators'])} indicators)"
             
-            print(f"      - {step_name}{extra_info}: {'✅' if test.get('success') else '❌'}")
+            print(f"      - {step_name}{extra_info}: {'OK' if test.get('success') else 'X'}")
 
 
-# =============================================================================
-# COMBINED TEST SUITE - Both Basic and Advanced
-# =============================================================================
+
 
 @pytest.mark.both
 class TestAmazonBoth:

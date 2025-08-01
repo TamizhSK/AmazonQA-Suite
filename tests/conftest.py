@@ -1,6 +1,4 @@
-"""
-Pytest configuration - Enhanced setup with reporting
-"""
+
 
 import pytest
 import time

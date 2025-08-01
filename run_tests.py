@@ -1,7 +1,3 @@
-"""
-Amazon India Test Runner
-Supports Basic, Advanced, and Both test categories
-"""
 
 import subprocess
 import sys

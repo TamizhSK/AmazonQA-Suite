@@ -1,7 +1,4 @@
-"""
-Amazon India Complete Test Suite
-Structured with Basic and Advanced test categories with comprehensive capabilities
-"""
+
 
 import pytest
 import time
@@ -16,10 +13,6 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.common.exceptions import TimeoutException, NoSuchElementException
 
-
-# =============================================================================
-# BASIC TEST SUITE - Essential functionality testing
-# =============================================================================
 
 @pytest.mark.basic
 class TestAmazonBasic:
@@ -40,7 +33,7 @@ class TestAmazonBasic:
         search_box = wait.until(EC.element_to_be_clickable((By.NAME, "field-keywords")))
         assert search_box.is_displayed()
         
-        print("✅ Homepage loaded successfully")
+        print(" Homepage loaded successfully")
     
     def test_basic_search(self, browser_setup):
         """Test basic search functionality"""
@@ -61,7 +54,7 @@ class TestAmazonBasic:
         ))
         
         assert len(results) >= 5, f"Expected at least 5 results, got {len(results)}"
-        print(f"✅ Found {len(results)} search results")
+        print(f" Found {len(results)} search results")
     
     def test_product_page_navigation(self, browser_setup):
         """Test navigation to product page"""
@@ -113,12 +106,10 @@ class TestAmazonBasic:
                 continue
         
         assert product_page_found, "Product page elements not found"
-        print("✅ Product page navigation successful")
+        print(" Product page navigation successful")
 
 
-# =============================================================================
-# ADVANCED TEST SUITE - Comprehensive testing with deep validation
-# =============================================================================
+
 
 @pytest.mark.advanced
 class TestAmazonAdvanced:
@@ -496,9 +487,7 @@ class TestAmazonAdvanced:
             execution_time = time.time() - start_time
             return {"success": False, "time": execution_time, "error": str(e)}
     
-    # =========================================================================
-    # ADVANCED TEST METHODS
-    # =========================================================================
+
     
     def test_comprehensive_search_with_categories(self, browser_setup):
         """Test comprehensive search across multiple categories with validation"""
@@ -551,7 +540,7 @@ class TestAmazonAdvanced:
         
         assert success_rate >= 0.75, f"Search success rate too low: {success_rate:.2f}"
         
-        print(f"✅ Comprehensive search test passed - Success rate: {success_rate:.2f}")
+        print(f" Comprehensive search test passed - Success rate: {success_rate:.2f}")
         print(f"   Categories tested: {len(search_results)}")
         print(f"   Total searches: {total_searches}")
         print(f"   Successful searches: {successful_searches}")
@@ -595,7 +584,7 @@ class TestAmazonAdvanced:
             
             assert overall_accuracy >= 70, f"Overall price accuracy too low: {overall_accuracy:.1f}%"
             
-            print(f"✅ Advanced price validation passed")
+            print(f" Advanced price validation passed")
             print(f"   Overall accuracy: {overall_accuracy:.1f}%")
             print(f"   Tests passed: {passed_tests}/{len(price_validation_results)}")
     
@@ -660,7 +649,7 @@ class TestAmazonAdvanced:
         assert interaction_success_rate >= 0.6, f"Mouse interaction success rate too low: {interaction_success_rate:.2f}"
         assert navigation_success_rate >= 0.5, f"Product navigation success rate too low: {navigation_success_rate:.2f}"
         
-        print(f"✅ Advanced product interaction test passed")
+        print(f" Advanced product interaction test passed")
         print(f"   Mouse interactions: {interaction_score}/{len(products[:3])} successful")
         print(f"   Product navigation: {navigation_successful}/2 successful")
     
@@ -723,7 +712,7 @@ class TestAmazonAdvanced:
         except:
             print("   Browser performance metrics not available")
         
-        print(f"✅ Performance and validation test passed")
+        print(f" Performance and validation test passed")
         print(f"   Homepage load: {homepage_perf['time']:.2f}s")
         if search_times:
             print(f"   Average search: {avg_search_time:.2f}s")
@@ -746,9 +735,7 @@ class TestAmazonAdvanced:
         return (relevant_count / len(products_data)) * 100 if products_data else 0
 
 
-# =============================================================================
-# COMBINED TEST SUITE - Both Basic and Advanced
-# =============================================================================
+
 
 @pytest.mark.both
 class TestAmazonBoth:
@@ -775,7 +762,7 @@ class TestAmazonBoth:
             EC.presence_of_all_elements_located((By.CSS_SELECTOR, "[data-component-type='s-search-result']"))
         )
         assert len(basic_results) >= 5, "Basic search failed"
-        print(f"   ✅ Basic search: {len(basic_results)} results found")
+        print(f"    Basic search: {len(basic_results)} results found")
         
         # Phase 2: Advanced validation
         print("🔷 Phase 2: Advanced Validation")
@@ -790,12 +777,12 @@ class TestAmazonBoth:
         products_with_ratings = sum(1 for p in products_data if p.get("rating"))
         
         assert products_with_prices >= 3, f"Insufficient price data: {products_with_prices}"
-        print(f"   ✅ Advanced extraction: {len(products_data)} products, {products_with_prices} with prices")
+        print(f"    Advanced extraction: {len(products_data)} products, {products_with_prices} with prices")
         
         # Phase 3: Interactive validation
         print("🔷 Phase 3: Interactive Validation")
         interaction_score = advanced_tester.advanced_mouse_interactions(driver, basic_results[:3])
         assert interaction_score >= 1, "Mouse interactions failed"
-        print(f"   ✅ Mouse interactions: {interaction_score}/3 successful")
+        print(f"    Mouse interactions: {interaction_score}/3 successful")
         
-        print("✅ Complete workflow test passed - Basic to Advanced integration successful")
+        print(" Complete workflow test passed - Basic to Advanced integration successful")

@@ -1,4 +1,4 @@
-# Amazon India Test Suite - Developer Documentation
+# Amazon India Test Suite
 
 A comprehensive Selenium automation framework for testing Amazon India's e-commerce functionality with Python 3.8+ compatibility, single-window execution, and enhanced reporting capabilities.
 
